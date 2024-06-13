@@ -9,43 +9,43 @@ import kotlinx.coroutines.flow.update
 
 class MortgageViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MortgageState())
-    var selfAmount = 0.00f
-    var selfYear = 0
-    var selfRate = 0.000f
     val uiState: StateFlow<MortgageState> = _uiState.asStateFlow()
-    val MONEY: DecimalFormat = DecimalFormat("$#, ##0.00")
-    
+
     fun setAmount(newAmount: Float) {
         if (newAmount >= 0) {
             _uiState.update { currentState ->
                 currentState.copy(amount = newAmount)
             }
-            selfAmount = newAmount
+            uiState.value.amount = newAmount
         }
     }
-    
+
     fun setYears (newYear: Int) {
         if (newYear >= 0) {
             _uiState.update { currentState ->
                 currentState.copy(years = newYear)
             }
-            selfYear = newYear
+            uiState.value.years = newYear
         }
     }
-    
-    fun monthlyPayment(): Float {
-        val mRate = selfRate / 12
-        val temp = Math.pow((1/(1+mRate)).toDouble(), (selfYear * 12).toDouble())
 
-        return selfAmount * mRate / (1 - temp).toFloat()
+
+    private fun monthlyPayment() {
+        val mRate = uiState.value.rate / 12
+        val temp = Math.pow((1/(1+mRate)).toDouble(), (uiState.value.years * 12).toDouble())
+        _uiState.update { currentState ->
+            currentState.copy(
+                monthlyPayment = uiState.value.rate * mRate / (1 - temp).toFloat()
+            )
+        }
     }
 
-    fun totalPayment(): Float {
-        return monthlyPayment() * selfYear * 12
-    }
-
-    fun formattedTotalPayments(): String? {
-        return MONEY.format(totalPayment())
+    fun totalPayment() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                totalPayment = uiState.value.monthlyPayment * uiState.value.years * 12
+            )
+        }
     }
 }
 
