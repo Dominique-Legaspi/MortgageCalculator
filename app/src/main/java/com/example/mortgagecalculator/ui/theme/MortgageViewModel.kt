@@ -32,7 +32,23 @@ class MortgageViewModel : ViewModel() {
             uiState.value.years = newYear
         }
     }
-
+    fun setRate(newRate: Float){
+        if(newRate >= 0 ){
+            _uiState.update { currentState ->
+                currentState.copy(rate = newRate)
+            }
+            uiState.value.rate = newRate
+        }
+    }
+    fun getAmount(): Float{
+        return uiState.value.amount
+    }
+    fun getYear(): Int{
+        return uiState.value.years
+    }
+    fun getRate(): Float{
+        return uiState.value.rate
+    }
     private fun monthlyPayment() {
         val mRate = uiState.value.rate / 12
         val temp = Math.pow((1/(1+mRate)).toDouble(), (uiState.value.years * 12).toDouble())

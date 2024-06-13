@@ -37,6 +37,7 @@ fun MortgageModifyScreen(
 ) {
     val mortgageUiState by mortgageViewModel.uiState.collectAsState()
 
+
     Column (modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ){
@@ -65,7 +66,7 @@ fun MortgageModifyScreen(
                     .weight(1f)
             )
             OutlinedTextField(
-                value = ,
+                value = "",
                 onValueChange = { },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
@@ -85,7 +86,7 @@ fun MortgageModifyScreen(
                     .weight(1f)
             )
             OutlinedTextField(
-                value = ,
+                value = "",
                 onValueChange = { },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
