@@ -36,7 +36,8 @@ fun MortgageModifyScreen(
     modifier: Modifier = Modifier
 ) {
     val mortgageUiState by mortgageViewModel.uiState.collectAsState()
-
+    var temp_amount by remember { mutableStateOf("")}
+    var temp_rate  by remember { mutableStateOf("")}
 
     Column (modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -52,7 +53,7 @@ fun MortgageModifyScreen(
                 modifier = Modifier
                     .weight(1f)
             )
-            YearSelection()
+            YearSelection(mortgageViewModel)
         }
         Row (modifier = Modifier.padding(start = 14.dp, 2.dp),
             horizontalArrangement = Arrangement.Center,
@@ -66,8 +67,10 @@ fun MortgageModifyScreen(
                     .weight(1f)
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = temp_amount,
+                onValueChange = {temp_amount = it
+                                    mortgageViewModel.setAmount(temp_amount.toFloat())
+                                },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
@@ -86,8 +89,9 @@ fun MortgageModifyScreen(
                     .weight(1f)
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = temp_rate.toString(),
+                onValueChange = {temp_rate = it
+                                mortgageViewModel.setRate(temp_rate.toFloat())},
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -104,10 +108,18 @@ fun MortgageModifyScreen(
 }
 
 @Composable
-fun YearSelection() {
+fun YearSelection(mortgageViewModel: MortgageViewModel = MortgageViewModel()) {
+    var selected = 0
+    when(mortgageViewModel.getYear()){
+        10 -> selected = 0
+        15 -> selected = 1
+        30 -> selected = 2
+        else -> selected = 1
+    }
+
     val radioOptions = listOf("10", "15", "30")
     val (selectedOption, onOptionSelected) = remember {
-        mutableStateOf(radioOptions[1]) }
+        mutableStateOf(radioOptions[selected]) }
 
     radioOptions.forEach { text ->
         Row(horizontalArrangement = Arrangement.Center,
@@ -121,7 +133,8 @@ fun YearSelection() {
         ) {
             RadioButton(
                 selected = (text == selectedOption),
-                onClick = { onOptionSelected(text)}
+                onClick = { onOptionSelected(text)
+                            mortgageViewModel.setYears(text.toInt())}
             )
             Text(
                 text = text,

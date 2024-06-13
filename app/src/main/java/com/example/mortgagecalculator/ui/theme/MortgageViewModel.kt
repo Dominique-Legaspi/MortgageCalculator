@@ -6,14 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.math.roundToInt
 
 class MortgageViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MortgageState())
     val uiState: StateFlow<MortgageState> = _uiState.asStateFlow()
 
-    private var amount = 0f
-    private var years = 0
-    private var rate = 0f
 
     fun setAmount(newAmount: Float) {
         if (newAmount >= 0) {
@@ -49,22 +47,24 @@ class MortgageViewModel : ViewModel() {
     fun getRate(): Float{
         return uiState.value.rate
     }
-    private fun monthlyPayment() {
+    fun monthlyPayment(): Float {
         val mRate = uiState.value.rate / 12
         val temp = Math.pow((1/(1+mRate)).toDouble(), (uiState.value.years * 12).toDouble())
         _uiState.update { currentState ->
             currentState.copy(
-                monthlyPayment = uiState.value.rate * mRate / (1 - temp).toFloat()
+                monthlyPayment = uiState.value.amount * mRate / (1 - temp).toFloat()
             )
         }
+       return ((_uiState.value.monthlyPayment * 100.0).roundToInt()/100.0).toFloat()
     }
 
-    fun totalPayment() {
+    fun totalPayment():Float {
         _uiState.update { currentState ->
             currentState.copy(
                 totalPayment = uiState.value.monthlyPayment * uiState.value.years * 12
             )
         }
+        return ((_uiState.value.totalPayment * 100.0).roundToInt()/100.0).toFloat()
     }
 }
 

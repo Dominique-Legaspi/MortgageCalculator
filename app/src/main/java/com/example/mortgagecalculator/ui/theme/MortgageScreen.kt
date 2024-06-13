@@ -107,8 +107,8 @@ fun MortgageApp(
                     RowInfo(name = "Amount", data = mortgageUiState.amount)
                     RowInfo(name = "Year", data = mortgageUiState.years)
                     RowInfo(name = "Interest Rate", data = mortgageUiState.rate)
-                    RowInfo(name = "Monthly Payment", data = mortgageUiState.monthlyPayment)
-                    RowInfo(name = "Total Payment", data = mortgageUiState.totalPayment)
+                    RowInfo(name = "Monthly Payment", data = mortgageViewModel.monthlyPayment())
+                    RowInfo(name = "Total Payment", data = mortgageViewModel.totalPayment())
                     Button(
                         onClick = { navController.navigate(MortgageScreen.Modify.name)},
                         modifier = Modifier
@@ -119,7 +119,8 @@ fun MortgageApp(
                 }
             }
             composable(route = MortgageScreen.Modify.name) {
-                MortgageModifyScreen(onDoneClicked = { navController.navigate(MortgageScreen.Start.name)})
+                MortgageModifyScreen(onDoneClicked = { navController.navigate(MortgageScreen.Start.name)},
+                    mortgageViewModel)
             }
         }
     }
