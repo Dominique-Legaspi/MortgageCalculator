@@ -11,6 +11,10 @@ class MortgageViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MortgageState())
     val uiState: StateFlow<MortgageState> = _uiState.asStateFlow()
 
+    private var amount = 0f
+    private var years = 0
+    private var rate = 0f
+
     fun setAmount(newAmount: Float) {
         if (newAmount >= 0) {
             _uiState.update { currentState ->
@@ -28,7 +32,6 @@ class MortgageViewModel : ViewModel() {
             uiState.value.years = newYear
         }
     }
-
 
     private fun monthlyPayment() {
         val mRate = uiState.value.rate / 12
