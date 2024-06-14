@@ -69,7 +69,6 @@ fun MortgageModifyScreen(
             OutlinedTextField(
                 value = temp_amount,
                 onValueChange = {temp_amount = it
-                                    mortgageViewModel.setAmount(temp_amount.toFloat())
 
                                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -92,7 +91,7 @@ fun MortgageModifyScreen(
             OutlinedTextField(
                 value = temp_rate,
                 onValueChange = {temp_rate = it
-                                mortgageViewModel.setRate(temp_rate.toFloat())
+
                                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
@@ -100,7 +99,10 @@ fun MortgageModifyScreen(
                 ),
                 modifier = Modifier.weight(1f).padding(end = 5.dp))
         }
-        Button(onClick = onDoneClicked,
+        Button(onClick = {
+            mortgageViewModel.setAmount(temp_amount.toFloat())
+            mortgageViewModel.setRate(temp_rate.toFloat())
+            onDoneClicked()},
             modifier = Modifier
                 .padding(10.dp)
                 .align(Alignment.CenterHorizontally)) {
