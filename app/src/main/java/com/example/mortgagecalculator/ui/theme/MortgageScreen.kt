@@ -119,7 +119,7 @@ fun MortgageApp(
                 }
             }
             composable(route = MortgageScreen.Modify.name) {
-                MortgageModifyScreen(onDoneClicked = { navController.navigate(MortgageScreen.Start.name)},
+                MortgageModifyScreen(onDoneClicked = { navController.navigateUp()},
                     mortgageViewModel)
             }
         }

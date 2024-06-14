@@ -36,8 +36,8 @@ fun MortgageModifyScreen(
     modifier: Modifier = Modifier
 ) {
     val mortgageUiState by mortgageViewModel.uiState.collectAsState()
-    var temp_amount by remember { mutableStateOf("")}
-    var temp_rate  by remember { mutableStateOf("")}
+   var temp_amount by remember { mutableStateOf(mortgageViewModel.getAmount().toString())}
+    var temp_rate  by remember { mutableStateOf(mortgageViewModel.getRate().toString())}
 
     Column (modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -70,6 +70,7 @@ fun MortgageModifyScreen(
                 value = temp_amount,
                 onValueChange = {temp_amount = it
                                     mortgageViewModel.setAmount(temp_amount.toFloat())
+
                                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
@@ -89,9 +90,10 @@ fun MortgageModifyScreen(
                     .weight(1f)
             )
             OutlinedTextField(
-                value = temp_rate.toString(),
+                value = temp_rate,
                 onValueChange = {temp_rate = it
-                                mortgageViewModel.setRate(temp_rate.toFloat())},
+                                mortgageViewModel.setRate(temp_rate.toFloat())
+                                },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -106,6 +108,7 @@ fun MortgageModifyScreen(
         }
     }
 }
+
 
 @Composable
 fun YearSelection(mortgageViewModel: MortgageViewModel = MortgageViewModel()) {
