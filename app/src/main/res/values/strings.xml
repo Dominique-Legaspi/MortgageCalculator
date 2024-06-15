@@ -3,4 +3,9 @@
     <string name="mortgage">Mortgage</string>
     <string name="modify_data">Modify data</string>
     <string name="amount">Amount</string>
+    <string name="year">Year</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="monthly_payment">Monthly Payment</string>
+    <string name="total_payment">Total Payment</string>
+    <string name="done">Done</string>
 </resources>

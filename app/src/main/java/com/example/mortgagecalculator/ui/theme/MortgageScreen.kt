@@ -104,17 +104,17 @@ fun MortgageApp(
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Top
                 ) {
-                    RowInfo(name = "Amount", data = mortgageUiState.amount)
-                    RowInfo(name = "Year", data = mortgageUiState.years)
-                    RowInfo(name = "Interest Rate", data = mortgageUiState.rate)
-                    RowInfo(name = "Monthly Payment", data = mortgageViewModel.monthlyPayment())
-                    RowInfo(name = "Total Payment", data = mortgageViewModel.totalPayment())
+                    RowInfo(name = R.string.amount, data = "$" + mortgageUiState.amount)
+                    RowInfo(name = R.string.year, data = mortgageUiState.years)
+                    RowInfo(name = R.string.interest_rate, data = (mortgageUiState.rate * 100).toString() + "%")
+                    RowInfo(name = R.string.monthly_payment, data = "$" + mortgageViewModel.monthlyPayment())
+                    RowInfo(name = R.string.total_payment, data = "$" + mortgageViewModel.totalPayment())
                     Button(
                         onClick = { navController.navigate(MortgageScreen.Modify.name)},
                         modifier = Modifier
                             .padding(10.dp)
                             .align(Alignment.CenterHorizontally)) {
-                        Text(text = "Modify Data")
+                        Text(text = stringResource(R.string.modify_data))
                     }
                 }
             }

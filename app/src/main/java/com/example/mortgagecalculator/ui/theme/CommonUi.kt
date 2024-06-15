@@ -5,15 +5,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun RowInfo(name: String, data: Any, modifier: Modifier = Modifier) {
+fun RowInfo(name: Int, data: Any, modifier: Modifier = Modifier) {
     Row (modifier = modifier.padding(6.dp)){
         Text(
-            text = name,
+            text = stringResource(name),
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
